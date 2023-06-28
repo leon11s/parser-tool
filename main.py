@@ -46,8 +46,6 @@ def parse_arguments_remove_empty_lines(arguments: list[str]) -> bool:
     for argument in arguments:
         if argument == "--remove-empty-lines":
             return True
-        else:
-            return False
     return False
 
 
