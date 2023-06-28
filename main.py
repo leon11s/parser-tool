@@ -10,9 +10,14 @@ Options:
     --remove-empty-lines        Remove empty lines from merged file (optional). Default: False.
 """
 
-import fnmatch
 import os
 import sys
+
+from file_helpers import (
+    get_absolute_file_paths,
+    read_text_file_to_list,
+    write_list_to_text_file,
+)
 
 # TODO: If not arguments are provided, ask user for input and output paths.
 
@@ -49,35 +54,12 @@ def parse_arguments_remove_empty_lines(arguments: list[str]) -> bool:
     return False
 
 
-def get_absolute_file_paths(folder_name: str, filter: str = "*") -> list[str]:
-    absolute_paths = []
-    for dirpath, _, filenames in os.walk(folder_name):
-        for filename in filenames:
-            if fnmatch.fnmatch(filename, filter):
-                absolute_path = os.path.abspath(os.path.join(dirpath, filename))
-                absolute_paths.append(absolute_path)
-    return absolute_paths
-
-
-def read_text_file_to_list(file_path: str) -> list[str]:
-    """Reads text file and returns list of lines."""
-    with open(file_path, "r") as file:
-        file_data = file.readlines()
-    return file_data
-
-
 def strip_new_line_characters(file_data: list[str]) -> list[str]:
     return [line.strip() for line in file_data]
 
 
 def remove_empty_lines_from_list(file_data: list[str]) -> list[str]:
     return [line for line in file_data if line != ""]
-
-
-def write_list_to_text_file(file_data: list[str], file_path: str) -> None:
-    with open(file_path, "w") as file:
-        for line in file_data:
-            file.write(line + "\n")
 
 
 def split_input_path(input_path: str) -> tuple[str, str]:
@@ -113,4 +95,5 @@ def main():
     print("Done!")
 
 
+print("Start...")
 main()
