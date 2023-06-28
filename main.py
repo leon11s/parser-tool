@@ -67,6 +67,9 @@ def remove_empty_lines_from_list(file_data: list[str]) -> list[str]:
 def split_input_path(input_path: str) -> tuple[str, str]:
     """Splits input path into folder path and filter."""
     dir_name, file_name = os.path.split(input_path)
+    if not os.path.exists(dir_name):
+        print(f"Directory {dir_name} does not exist. Exiting...")
+        sys.exit(1)
     return dir_name, file_name
 
 
