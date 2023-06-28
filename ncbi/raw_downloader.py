@@ -15,6 +15,7 @@ def extract_zip_file(zip_file_path, output_dir):
 def get_acc_numbers_from_excel(file_path: str, sheet_name: str) -> list[str]:
     data = pd.read_excel(file_path, sheet_name=sheet_name)
     data["Input_clean"] = data["Input"].str.replace(">", "")
+    data["Input_clean"] = data["Input_clean"].str.replace("prf||", "")
     return data.loc[:, "Input_clean"].to_list()
 
 
@@ -30,15 +31,18 @@ def export_to_file(file_path: str, name: str, output_dir: str) -> None:
 
 
 def download_from_api(acc_number: str, download_folder: str, output_dir: str) -> None:
-    url = f"https://api.ncbi.nlm.nih.gov/datasets/v2alpha/protein/accession/{acc_number}/download"
-    query_param = {"include_annotation_type": "FASTA_PROTEIN"}
-    os.makedirs(download_folder, exist_ok=True)
-    file_path = os.path.join(download_folder, f"{acc_number}.zip")
-    with open(file_path, "wb") as file:
-        resp = requests.get(url, params=query_param)
-        file.write(resp.content)
-    export_to_file(file_path, acc_number, output_dir)
-    print(f"Downloaded {url} to {file_path}.")
+    try:
+        url = f"https://api.ncbi.nlm.nih.gov/datasets/v2alpha/protein/accession/{acc_number}/download"
+        query_param = {"include_annotation_type": "FASTA_PROTEIN"}
+        os.makedirs(download_folder, exist_ok=True)
+        file_path = os.path.join(download_folder, f"{acc_number}.zip")
+        with open(file_path, "wb") as file:
+            resp = requests.get(url, params=query_param)
+            file.write(resp.content)
+        export_to_file(file_path, acc_number, output_dir)
+        print(f"Downloaded {url} to {file_path}.")
+    except Exception as e:
+        print(f"Error downloading {acc_number}: {e}")
 
 
 def main():
@@ -53,8 +57,6 @@ def main():
     shutil.rmtree("data_temp", ignore_errors=True)
 
     for acc_number in acc_numbers:
-        if acc_number.startswith("prf"):
-            continue
         print(f"---> Downloading {acc_number}...")
         download_from_api(acc_number, "data", output_dir)
 
