@@ -16,6 +16,7 @@ import sys
 from file_helpers import (
     get_absolute_file_paths,
     read_text_file_to_list,
+    validate_folder_path,
     write_list_to_text_file,
 )
 
@@ -73,6 +74,7 @@ def main():
     # Parse arguments
     input_path = parse_arguments_input_path(sys.argv)
     output_path = parse_arguments_output_path(sys.argv)
+    validate_folder_path(output_path)
     remove_empty_lines = parse_arguments_remove_empty_lines(sys.argv)
     data_folder_name, filter_file_name = split_input_path(input_path)
 
