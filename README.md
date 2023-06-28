@@ -8,10 +8,10 @@ Features:
 - [x] Add basic support to merge multiple files
 - [x] Add filter support
 - [x] Add command line support (arguments)
+- Download files from internet
 - Add support to merge csv files
 - Add support to merge excel files
 - Convert between csv and excel files (and vice versa)
-- Download files from internet
 - Add files to database
 - Create file report (basic info)
 - Create file report (advanced info)
