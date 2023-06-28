@@ -19,17 +19,36 @@ import sys
 
 def parse_arguments_input_path(arguments: list[str]) -> str:
     """Parses input path from arguments."""
-    pass
+    for argument in arguments:
+        if argument.startswith("--input-path="):
+            input_path = argument.split("--input-path=")[1]
+            return input_path
+
+    print("Argument --input-path= not provided. Please use it.")
+    sys.exit(1)
 
 
 def parse_arguments_output_path(arguments: list[str]) -> str:
     """Parses output path from arguments."""
-    pass
+    for argument in arguments:
+        if argument.startswith("--output-path="):
+            input_path = argument.split("--output-path=")[1]
+            return input_path
+
+    print(
+        "Argument --output-path= not provided. Default value will be used (merged.txt)."
+    )
+    return "merged.txt"
 
 
 def parse_arguments_remove_empty_lines(arguments: list[str]) -> bool:
     """Parses remove empty lines from arguments."""
-    pass
+    for argument in arguments:
+        if argument == "--remove-empty-lines":
+            return True
+        else:
+            return False
+    return False
 
 
 def get_absolute_file_paths(folder_name: str, filter: str = "*") -> list[str]:
@@ -65,10 +84,8 @@ def write_list_to_text_file(file_data: list[str], file_path: str) -> None:
 
 def split_input_path(input_path: str) -> tuple[str, str]:
     """Splits input path into folder path and filter."""
-    # Input: data/reports/repo_22_06*
-    # Output: (data/reports, repo_22_06*)
-
-    pass
+    dir_name, file_name = os.path.split(input_path)
+    return dir_name, file_name
 
 
 def main():
@@ -96,3 +113,6 @@ def main():
     write_list_to_text_file(file_path=output_path, file_data=merged_list)
 
     print("Done!")
+
+
+main()
