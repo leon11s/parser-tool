@@ -30,7 +30,8 @@ def parse_arguments_input_path(arguments: list[str]) -> str:
             return input_path
 
     print("Argument --input-path= not provided. Please use it.")
-    sys.exit(1)
+    path = input("Enter input path: ")
+    return path
 
 
 def parse_arguments_output_path(arguments: list[str]) -> str:
