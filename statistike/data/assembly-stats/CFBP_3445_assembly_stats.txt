@@ -1,0 +1,10 @@
+stats for /DKHB/work/aleksanderb/WGS/Pstewartii/03_assembly/unicycler/CFBP_3445/assembly.fasta
+sum = 5480083, n = 75, ave = 73067.77, largest = 4598621
+N50 = 4598621, n = 1
+N60 = 4598621, n = 1
+N70 = 4598621, n = 1
+N80 = 4598621, n = 1
+N90 = 107984, n = 3
+N100 = 105, n = 75
+N_count = 0
+Gaps = 0

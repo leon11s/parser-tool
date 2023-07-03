@@ -1,0 +1,10 @@
+stats for /DKHB/work/aleksanderb/WGS/Pstewartii/03_assembly/unicycler/NIB_Z_3516/assembly.fasta
+sum = 5252079, n = 16, ave = 328254.94, largest = 1495159
+N50 = 1328781, n = 2
+N60 = 513629, n = 3
+N70 = 435178, n = 4
+N80 = 307442, n = 6
+N90 = 107879, n = 8
+N100 = 13392, n = 16
+N_count = 0
+Gaps = 0
