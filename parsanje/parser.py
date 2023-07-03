@@ -1,3 +1,4 @@
+import os
 import sys
 from typing import Union
 
@@ -5,6 +6,14 @@ import pdfkit
 
 WKHTMLTOPDF_EXECUTABLE = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
 BASE_TAXON_URL = "https://gd.eppo.int/taxon/"
+
+
+def validate_folder_path(path: str) -> None:
+    if os.path.isfile(path):
+        print(f"Error: {path} is a file, not a folder.")
+        sys.exit(1)
+
+    os.makedirs(path, exist_ok=True)
 
 
 def convert_webpage_to_pdf(
@@ -31,7 +40,18 @@ def run_code_mode() -> None:
 
 
 def run_file_mode() -> None:
-    pass
+    input_file_path = input("Enter the path to the input file: ")
+    output_folder_path = input("Enter the path to the output folder: ")
+    validate_folder_path(output_folder_path)
+    if os.path.exists(input_file_path):
+        with open(input_file_path, "r") as input_file:
+            for line in input_file:
+                code = line.strip()
+                url = f"{BASE_TAXON_URL}{code.upper()}"
+                output_file_path = os.path.join(output_folder_path, f"{code}.pdf")
+                convert_webpage_to_pdf(url, output_file_path, WKHTMLTOPDF_EXECUTABLE)
+    else:
+        print("Error: Input file does not exist.")
 
 
 def run_search_mode() -> None:
