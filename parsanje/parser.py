@@ -3,6 +3,9 @@ from typing import Union
 
 import pdfkit
 
+WKHTMLTOPDF_EXECUTABLE = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+BASE_TAXON_URL = "https://gd.eppo.int/taxon/"
+
 
 def convert_webpage_to_pdf(
     url: str,
@@ -21,7 +24,10 @@ def convert_webpage_to_pdf(
 
 
 def run_code_mode() -> None:
-    pass
+    code = input("Enter the code of the taxon: ")
+    url = f"{BASE_TAXON_URL}{code.upper()}"
+    output_file_path = f"{code}.pdf"
+    convert_webpage_to_pdf(url, output_file_path, WKHTMLTOPDF_EXECUTABLE)
 
 
 def run_file_mode() -> None:
@@ -56,4 +62,4 @@ if __name__ == "__main__":
     main()
 # https://gd.eppo.int/search?k=ralstonia
 # https://gd.eppo.int/taxon/RALSSL
-# C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+#
