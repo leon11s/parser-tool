@@ -1,11 +1,14 @@
 import os
+import random
 import sys
+import time
 from typing import Union
 
 import pdfkit
 
-WKHTMLTOPDF_EXECUTABLE = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+WKHTMLTOPDF_EXECUTABLE: str = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
 BASE_TAXON_URL = "https://gd.eppo.int/taxon/"
+BASE_SEARCH_URL = "https://gd.eppo.int/search?k="
 
 
 def validate_folder_path(path: str) -> None:
@@ -32,6 +35,15 @@ def convert_webpage_to_pdf(
         print("Error: wkhtmltopdf not found in the specified location.")
 
 
+def get_taxon_code_from_url(url: str) -> list[str]:
+    pass
+    # search rezultate preprasate v html
+    # request.get(url)
+    # https://realpython.com/beautiful-soup-web-scraper-python/
+    # beautiful soup - html parser
+    # soup = BeautifulSoup(html, "html.parser")
+
+
 def run_code_mode() -> None:
     code = input("Enter the code of the taxon: ")
     url = f"{BASE_TAXON_URL}{code.upper()}"
@@ -50,12 +62,23 @@ def run_file_mode() -> None:
                 url = f"{BASE_TAXON_URL}{code.upper()}"
                 output_file_path = os.path.join(output_folder_path, f"{code}.pdf")
                 convert_webpage_to_pdf(url, output_file_path, WKHTMLTOPDF_EXECUTABLE)
+                time.sleep(random.randint(2, 7))
     else:
         print("Error: Input file does not exist.")
 
 
 def run_search_mode() -> None:
-    pass
+    input_search_term = input("Enter the search term: ")
+    output_folder_path = input("Enter the path to the output folder: ")
+    validate_folder_path(output_folder_path)
+    url = f"{BASE_SEARCH_URL}{input_search_term}"
+    codes = get_taxon_code_from_url(url)
+    for code in codes:
+        code = code.strip()
+        url = f"{BASE_TAXON_URL}{code.upper()}"
+        output_file_path = os.path.join(output_folder_path, f"{code}.pdf")
+        convert_webpage_to_pdf(url, output_file_path, WKHTMLTOPDF_EXECUTABLE)
+        time.sleep(random.randint(2, 7))
 
 
 def main():
