@@ -5,3 +5,6 @@ pdfkit==1.0.0
 notebook
 matplotlib
 xlrd
+pillow
+pytesseract
+easyocr
